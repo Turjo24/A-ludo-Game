@@ -1,0 +1,83 @@
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #0a0a12;
+  font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+}
+
+#scene {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+
+#hud {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  padding: 14px 18px;
+  background: rgba(15, 15, 25, 0.55);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  color: #f1f1f5;
+  font-size: 13px;
+  line-height: 1.6;
+  pointer-events: none;
+  user-select: none;
+  max-width: 260px;
+}
+
+#hud h1 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  color: #ffd166;
+}
+
+#hud .row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+#hud .key {
+  display: inline-block;
+  min-width: 44px;
+  text-align: center;
+  padding: 2px 6px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+#themeLabel, #diceLabel {
+  margin-top: 6px;
+  color: #9ad0ff;
+  font-weight: 600;
+}
+
+#loading {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #eee;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  background: #0a0a12;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+#loading.hidden {
+  opacity: 0;
+}

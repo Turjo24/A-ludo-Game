@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>3D Ludo | CSE4204 Final Project</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="scene"></canvas>
+
+  <div id="hud">
+    <h1>3D Ludo</h1>
+    <div class="row"><span class="key">← →</span> orbit camera around board</div>
+    <div class="row"><span class="key">↑ ↓</span> raise / lower camera</div>
+    <div class="row"><span class="key">W / S</span> zoom in / out</div>
+    <div class="row"><span class="key">Space</span> roll the dice</div>
+    <div class="row"><span class="key">Click board</span> change board skin</div>
+    <div class="row" id="themeLabel">Skin: Classic</div>
+    <div class="row" id="diceLabel">Dice: —</div>
+  </div>
+
+  <div id="loading">Loading Three.js scene…</div>
+
+  <script type="module" src="/main.js"></script>
+</body>
+</html>
