@@ -259,6 +259,31 @@ function drawBoard(ctx, size, t) {
   }
   star(6, 2, t.line); star(12, 6, t.line); star(2, 8, t.line); star(8, 12, t.line);
 
+
+  function arrow(col, row, angle, color) {
+    const cx = col * cell + cell / 2, cy = row * cell + cell / 2, s = cell * 0.32;
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(angle);
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.lineWidth = cell * 0.09;
+    ctx.lineCap = "round";
+    ctx.beginPath(); ctx.moveTo(-s, 0); ctx.lineTo(s * 0.4, 0); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(s, 0);
+    ctx.lineTo(s * 0.1, -s * 0.6);
+    ctx.lineTo(s * 0.1, s * 0.6);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }  
+
+  arrow(0, 7, 0, t.red);             
+  arrow(7, 0, Math.PI / 2, t.green);  
+  arrow(14, 7, Math.PI, t.yellow);    
+  arrow(7, 14, -Math.PI / 2, t.blue); 
+
   // center triangles: left=red, top=green, right=yellow, bottom=blue
   const c0 = 6 * cell, c1 = 9 * cell, mid = size / 2;
   ctx.fillStyle = t.red;
@@ -286,34 +311,6 @@ function buildBoardTexture(themeName) {
   return tex;
 }
 
-function buildWoodTexture() {
-  const size = 512;
-  const c = makeCanvas(size);
-  const ctx = c.getContext("2d");
-  const grd = ctx.createLinearGradient(0, 0, size, size);
-  grd.addColorStop(0, "#3c2415");
-  grd.addColorStop(1, "#5a3a22");
-  ctx.fillStyle = grd;
-  ctx.fillRect(0, 0, size, size);
-  ctx.globalAlpha = 0.25;
-  for (let i = 0; i < 60; i++) {
-    ctx.strokeStyle = i % 2 === 0 ? "#26160c" : "#6b4527";
-    ctx.lineWidth = 1 + Math.random() * 2;
-    ctx.beginPath();
-    const y = (i / 60) * size + (Math.random() - 0.5) * 8;
-    ctx.moveTo(0, y);
-    for (let x = 0; x <= size; x += 32) {
-      ctx.lineTo(x, y + Math.sin(x * 0.02 + i) * 6);
-    }
-    ctx.stroke();
-  }
-  ctx.globalAlpha = 1;
-  const tex = new THREE.CanvasTexture(c);
-  tex.colorSpace = THREE.SRGBColorSpace;
-  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
-  tex.repeat.set(4, 4);
-  return tex;
-}
 
 const PIP_LAYOUTS = {
   1: [[0.5, 0.5]],
