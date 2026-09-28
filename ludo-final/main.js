@@ -207,31 +207,43 @@ function drawBoard(ctx, size, t) {
   homeYard(0, 9, t.blue);
   homeYard(9, 9, t.yellow);
 
-  function pathCell(col, row, color) {
+    function pathCell(col, row, color) {
     ctx.fillStyle = color;
     ctx.fillRect(col * cell + 1, row * cell + 1, cell - 2, cell - 2);
   }
-  
-  for (let i = 1; i <= 5; i++) pathCell(1 + i - 1 + 0, 6, t.red);      
-  for (let r = 1; r <= 5; r++) pathCell(7, r, t.red);
-  pathCell(1, 6, t.red);
-  
-  for (let c = 9; c <= 13; c++) pathCell(c, 7, t.green);
-  pathCell(13, 1, t.green);
-  
-  for (let r = 9; r <= 13; r++) pathCell(7, r, t.yellow);
-  pathCell(13, 8, t.yellow);
-  
-  for (let c = 1; c <= 5; c++) pathCell(c, 7, t.blue);
-  pathCell(1, 13, t.blue);
 
+  // RED: start (1,6) + home column row 7, cols 1..5
+  pathCell(1, 6, t.red);
+  for (let c = 1; c <= 5; c++) pathCell(c, 7, t.red);
+
+  // GREEN: start (8,1) + home column col 7, rows 1..5
+  pathCell(8, 1, t.green);
+  for (let r = 1; r <= 5; r++) pathCell(7, r, t.green);
+
+  // YELLOW: start (13,8) + home column row 7, cols 9..13
+  pathCell(13, 8, t.yellow);
+  for (let c = 9; c <= 13; c++) pathCell(c, 7, t.yellow);
+
+  // BLUE: start (6,13) + home column col 7, rows 9..13
+  pathCell(6, 13, t.blue);
+  for (let r = 9; r <= 13; r++) pathCell(7, r, t.blue);
+
+  // grid lines on top
   ctx.strokeStyle = t.line;
+  ctx.lineWidth = Math.max(1, size * 0.0018);
   for (let i = 0; i <= 15; i++) {
     const p = i * cell;
     ctx.beginPath(); ctx.moveTo(6 * cell, p); ctx.lineTo(9 * cell, p); ctx.stroke();
     ctx.beginPath(); ctx.moveTo(p, 6 * cell); ctx.lineTo(p, 9 * cell); ctx.stroke();
   }
 
+  for (let k = 6; k <= 9; k++) {
+    const p = k * cell;
+    ctx.beginPath(); ctx.moveTo(p, 0); ctx.lineTo(p, size); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, p); ctx.lineTo(size, p); ctx.stroke();
+  }
+
+  // only 4 stars
   function star(col, row, color) {
     const cx = col * cell + cell / 2, cy = row * cell + cell / 2, r = cell * 0.32;
     ctx.fillStyle = color;
@@ -245,18 +257,18 @@ function drawBoard(ctx, size, t) {
     ctx.closePath();
     ctx.fill();
   }
-  star(6, 1, t.star); star(1, 8, t.star); star(8, 13, t.star); star(13, 6, t.star);
-  star(2, 6, t.star); star(6, 12, t.star); star(12, 8, t.star); star(8, 2, t.star);
+  star(6, 2, t.line); star(12, 6, t.line); star(2, 8, t.line); star(8, 12, t.line);
 
+  // center triangles: left=red, top=green, right=yellow, bottom=blue
   const c0 = 6 * cell, c1 = 9 * cell, mid = size / 2;
   ctx.fillStyle = t.red;
-  ctx.beginPath(); ctx.moveTo(c0, c0); ctx.lineTo(c1, c0); ctx.lineTo(mid, mid); ctx.closePath(); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(c0, c0); ctx.lineTo(c0, c1); ctx.lineTo(mid, mid); ctx.closePath(); ctx.fill();
   ctx.fillStyle = t.green;
-  ctx.beginPath(); ctx.moveTo(c1, c0); ctx.lineTo(c1, c1); ctx.lineTo(mid, mid); ctx.closePath(); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(c0, c0); ctx.lineTo(c1, c0); ctx.lineTo(mid, mid); ctx.closePath(); ctx.fill();
   ctx.fillStyle = t.yellow;
-  ctx.beginPath(); ctx.moveTo(c1, c1); ctx.lineTo(c0, c1); ctx.lineTo(mid, mid); ctx.closePath(); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(c1, c0); ctx.lineTo(c1, c1); ctx.lineTo(mid, mid); ctx.closePath(); ctx.fill();
   ctx.fillStyle = t.blue;
-  ctx.beginPath(); ctx.moveTo(c0, c1); ctx.lineTo(c0, c0); ctx.lineTo(mid, mid); ctx.closePath(); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(c1, c1); ctx.lineTo(c0, c1); ctx.lineTo(mid, mid); ctx.closePath(); ctx.fill();
 
   ctx.strokeStyle = t.line;
   ctx.lineWidth = size * 0.012;
